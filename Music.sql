@@ -388,15 +388,15 @@ insert into pago( idPago,id_usuario_pagador,tipo_memb_pagada,fecha_pago,fecha_ve
     (8426,4,'Estudiantes','2022-04-25','2022-05-25',7490,'Tajeta Fisica');
 
 -- CONSULTAS
--- Ver Albumes
+-- Consultar Albumes
 SELECT a.idAlbumes, a.id_artista, art.nombre as nombre_artista, a.nombre as nombre_album 
 	FROM albumes a, artistas art 
 	WHERE a.id_artista = art.idArtistas; 
     
--- Ver artistas
+-- Consultar artistas
 SELECT * FROM artistas;
 
--- Ver artistas_invitados
+-- Consultar artistas_invitados
 SELECT ai.id_artistas as id_artista_invitado,
 	a.nombre as artista_invitado, 
     ai.id_cancion as id_cancion_invitado, 
@@ -404,32 +404,32 @@ SELECT ai.id_artistas as id_artista_invitado,
     FROM artistas_invitados ai, artistas a, canciones c 
 	WHERE ai.id_artistas = a.idArtistas and ai.id_cancion = c.idCanciones;
  
--- Ver artistas_mas_escuchados 
+-- Consultar artistas_mas_escuchados 
 SELECT am.id_usuario, u.nombre_de_usuario, am.id_artista as id_artista_mas_escuchado, a.nombre as nombre_artista_mas_escuchado
 	FROM artistas_mas_esuchados am, usuarios u, artistas a
     WHERE am.id_usuario = u.idUsuario and am.id_artista = a.idArtistas;
 
--- Ver canciones
+-- Consultar canciones
 SELECT * FROM canciones;
 
--- Ver canciones_mas escuchadas FALTA
+-- Consultar canciones_mas escuchadas FALTA
 SELECT * FROM canciones_mas_escuchadas;
 
--- Ver listas_reproduccion FALTA
+-- Consultar listas_reproduccion FALTA
 SELECT * FROM listas_reproduccion;
 
- -- Ver membresias
+ -- Consultar membresias
 SELECT * FROM membresias;
 
--- Ver pago
+-- Consultar pago
 SELECT * FROM pago;
 
--- Ver usuario_pagador
+-- Consultar usuario_pagador
 SELECT up.id_usuario, u.nombre_completo, up.metodo_pago FROM usuario_pagador up, usuarios u
 	WHERE up.id_usuario = u.idUsuario;
 
--- Ver usuario
+-- Consultar usuario
 SELECT * FROM usuarios;
 
--- Ver usuarios_con_acceso_a_listas FALTA
+-- Consultar usuarios_con_acceso_a_listas FALTA
 SELECT * FROM usuarios_con_acceso_a_listas;
