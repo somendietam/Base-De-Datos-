@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS `proyecto_base_datos`.`Usuarios` (
   `tipo_membresia` VARCHAR(45) ,
   `correo` VARCHAR(45) ,
   `fecha_registro` DATE ,
-  `contraseña` VARCHAR(45) ,
+  `contrasenna` VARCHAR(45) ,
   `fecha_nacimiento` DATE ,
   `id_membresia` INT,
   PRIMARY KEY (`idUsuario`),
@@ -198,13 +198,13 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `proyecto_base_datos`.`Listas_reproduccion` (
   `idListas_reproduccion` INT NOT NULL,
   `nombre` VARCHAR(45) NULL,
-  `id_usuario_dueño` INT NULL,
+  `id_usuario_duenno` INT NULL,
   `tiempo_reproduccion` VARCHAR(45) NULL,
   `fecha_creacion` DATE NULL,
   PRIMARY KEY (`idListas_reproduccion`),
-  INDEX `Fk_listas_usuario_idx` (`id_usuario_dueño` ASC) VISIBLE,
+  INDEX `Fk_listas_usuario_idx` (`id_usuario_duenno` ASC) VISIBLE,
   CONSTRAINT `Fk_listas_usuario`
-    FOREIGN KEY (`id_usuario_dueño`)
+    FOREIGN KEY (`id_usuario_duenno`)
     REFERENCES `proyecto_base_datos`.`Usuarios` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -355,7 +355,7 @@ insert into Membresias(tipo,valor,num_integrantes)
     ('Premium Para Estudiantes',7490,1);
 
 
-insert into usuarios( nombre_completo,nombre_de_usuario,tipo_membresia,correo,fecha_registro,contraseña,
+insert into usuarios( nombre_completo,nombre_de_usuario,tipo_membresia,correo,fecha_registro,contrasenna,
 					  fecha_nacimiento,id_membresia)
 	Values 
     ('Juan Jose Villa Soria','Juan32soria','Familiar','juano321919@gmail.com','2022-11-22','Juan1234','2002-02-22',6543),
@@ -388,16 +388,48 @@ insert into pago( idPago,id_usuario_pagador,tipo_memb_pagada,fecha_pago,fecha_ve
     (8426,4,'Estudiantes','2022-04-25','2022-05-25',7490,'Tajeta Fisica');
 
 -- CONSULTAS
-SELECT * FROM albumes; 
+-- Ver Albumes
+SELECT a.idAlbumes, a.id_artista, art.nombre as nombre_artista, a.nombre as nombre_album 
+	FROM albumes a, artistas art 
+	WHERE a.id_artista = art.idArtistas; 
+    
+-- Ver artistas
 SELECT * FROM artistas;
-SELECT * FROM artistas_invitados;
-SELECT * FROM artistas_mas_esuchados;
-SELECT * FROM canciones;
-SELECT * FROM canciones_mas_escuchadas;
-SELECT * FROM listas_reproduccion;
-SELECT * FROM membresias;
-SELECT * FROM pago;
-SELECT * FROM usuario_pagador;
-SELECT * FROM usuarios;
-SELECT * FROM usuarios_con_acceso_a_listas;
 
+-- Ver artistas_invitados
+SELECT ai.id_artistas as id_artista_invitado,
+	a.nombre as artista_invitado, 
+    ai.id_cancion as id_cancion_invitado, 
+    c.nombre  as nombre_cancion_invitado
+    FROM artistas_invitados ai, artistas a, canciones c 
+	WHERE ai.id_artistas = a.idArtistas and ai.id_cancion = c.idCanciones;
+ 
+-- Ver artistas_mas_escuchados 
+SELECT am.id_usuario, u.nombre_de_usuario, am.id_artista as id_artista_mas_escuchado, a.nombre as nombre_artista_mas_escuchado
+	FROM artistas_mas_esuchados am, usuarios u, artistas a
+    WHERE am.id_usuario = u.idUsuario and am.id_artista = a.idArtistas;
+
+-- Ver canciones
+SELECT * FROM canciones;
+
+-- Ver canciones_mas escuchadas FALTA
+SELECT * FROM canciones_mas_escuchadas;
+
+-- Ver listas_reproduccion FALTA
+SELECT * FROM listas_reproduccion;
+
+ -- Ver membresias
+SELECT * FROM membresias;
+
+-- Ver pago
+SELECT * FROM pago;
+
+-- Ver usuario_pagador
+SELECT up.id_usuario, u.nombre_completo, up.metodo_pago FROM usuario_pagador up, usuarios u
+	WHERE up.id_usuario = u.idUsuario;
+
+-- Ver usuario
+SELECT * FROM usuarios;
+
+-- Ver usuarios_con_acceso_a_listas FALTA
+SELECT * FROM usuarios_con_acceso_a_listas;
